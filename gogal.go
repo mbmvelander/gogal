@@ -55,6 +55,8 @@ type GalGalData struct {
 	Lens     Lens
 	Source   Source
 	DeltaTh  float64
+	DeltaX  float64
+	DeltaY  float64
 	Phi      float64
 	Shear    Shear
 	FlexionF FlexionF
@@ -62,8 +64,8 @@ type GalGalData struct {
 }
 
 func (g GalGalData) String() string {
-	return fmt.Sprintf("%d %d %g %g %g %g %d %d %g %g %g %g %g %g %g %g %g %g %g %g %g %g",
-		g.Lens.ID, g.Source.ID, g.Lens.X, g.Lens.Y, g.Source.X, g.Source.Y, 0, 0, g.DeltaTh, g.Phi,
+	return fmt.Sprintf("%d %d %g %g %g %g %d %d %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g",
+		g.Lens.ID, g.Source.ID, g.Lens.X, g.Lens.Y, g.Source.X, g.Source.Y, 0, 0, g.DeltaTh, g.DeltaX, g.DeltaY, g.Phi,
 		g.Shear.EMode.Value, g.Shear.EMode.SDev, g.Shear.BMode.Value, g.Shear.BMode.SDev,
 		g.FlexionF.EMode.Value, g.FlexionF.EMode.SDev, g.FlexionF.BMode.Value, g.FlexionF.BMode.SDev,
 		g.FlexionG.EMode.Value, g.FlexionG.EMode.SDev, g.FlexionG.BMode.Value, g.FlexionG.BMode.SDev,
@@ -126,7 +128,7 @@ func main() {
 				se := Shear{EMode: Measurement{Value: seVal, SDev: source.Shear.One.SDev}, BMode: Measurement{Value: sbVal, SDev: source.Shear.Two.SDev}}
 				fe := FlexionF{EMode: Measurement{Value: feVal, SDev: source.FlexionF.One.SDev}, BMode: Measurement{Value: fbVal, SDev: source.FlexionF.Two.SDev}}
 				ge := FlexionG{EMode: Measurement{Value: geVal, SDev: source.FlexionG.One.SDev}, BMode: Measurement{Value: gbVal, SDev: source.FlexionG.Two.SDev}}
-				printChan <- GalGalData{Lens: lens, Source: source, DeltaTh: deltaTh, Phi: phi, Shear: se, FlexionF: fe, FlexionG: ge}
+				printChan <- GalGalData{Lens: lens, Source: source, DeltaTh: deltaTh, DeltaX: deltaX, DeltaY: deltaY, Phi: phi, Shear: se, FlexionF: fe, FlexionG: ge}
 			}
 		}(lens)
 	}
